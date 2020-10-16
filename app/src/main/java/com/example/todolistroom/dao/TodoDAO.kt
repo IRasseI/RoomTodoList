@@ -16,5 +16,8 @@ interface TodoDAO {
     fun insertTodo(todo: Todo)
 
     @Query("UPDATE todo_table SET state = :state WHERE idx = :idx")
-    fun changeStateTodo(state: Boolean, idx: Int)
+    fun changeStateTodo(idx: Int, state: Boolean)
+
+    @Query("DELETE FROM todo_table")
+    fun deleteAllTodo()
 }

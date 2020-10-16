@@ -25,10 +25,19 @@ class TodoRepository(application: Application) {
         catch (e: Exception) { }
     }
 
-    fun changeStateTodo(state: Boolean, idx: Int) {
+    fun changeStateTodo(idx: Int, state: Boolean) {
         try {
             val thread = Thread(Runnable {
-                todoDao.changeStateTodo(state, idx)
+                todoDao.changeStateTodo(idx, state)
+            }).start()
+        }
+        catch (e: Exception) { }
+    }
+
+    fun deleteAllTodo() {
+        try {
+            val thread = Thread(Runnable {
+                todoDao.deleteAllTodo()
             }).start()
         }
         catch (e: Exception) { }

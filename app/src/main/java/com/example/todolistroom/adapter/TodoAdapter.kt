@@ -1,5 +1,7 @@
 package com.example.todolistroom.adapter
 
+import android.graphics.Paint
+import android.graphics.Typeface
 import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +15,7 @@ import com.example.todolistroom.entity.Todo
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_todoitem.view.*
 
-class TodoAdapter(val checkedListener: (v: View, pos: Int, state: Boolean) -> Unit): RecyclerView.Adapter<TodoAdapter.Holder>() {
+class TodoAdapter(val changeState: (idx: Int, state: Boolean) -> Unit): RecyclerView.Adapter<TodoAdapter.Holder>() {
     private var todo: List<Todo> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder = Holder(parent)
@@ -22,10 +24,21 @@ class TodoAdapter(val checkedListener: (v: View, pos: Int, state: Boolean) -> Un
         todo[position].let {
             with(holder) {
                 tvTitle.text = it.title
-                cbState.isChecked = it.state
 
-                cbState.setOnCheckedChangeListener {v, isChecked ->
-                    checkedListener(v, position, isChecked)
+                if (it.state) {
+                    tvTitle.apply {
+                        paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                        setTypeface(null, Typeface.BOLD)
+                    }
+                } else {
+                    tvTitle.apply {
+                        paintFlags = paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                        setTypeface(null, Typeface.NORMAL)
+                    }
+                }
+
+                tvTitle.setOnClickListener {
+                    changeState(todo[position].idx!!, !todo[position].state)
                 }
             }
         }

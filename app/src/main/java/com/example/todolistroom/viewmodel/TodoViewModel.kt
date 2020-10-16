@@ -18,7 +18,11 @@ class TodoViewModel(application: Application): AndroidViewModel(application) {
         repository.insertTodo(todo)
     }
 
-    fun changeStateTodo(state: Boolean, idx: Int) {
-        repository.changeStateTodo(state, idx)
+    fun changeStateTodo(idx: Int, state: Boolean) {
+        repository.changeStateTodo(idx, state)
+    }
+
+    fun deleteAllTodo () {
+        repository.deleteAllTodo()
     }
 }
