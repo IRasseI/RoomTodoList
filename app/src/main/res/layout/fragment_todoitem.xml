@@ -10,7 +10,7 @@
     android:background="@drawable/todoitem_underline">
 
     <CheckBox
-        android:id="@+id/cb_state"
+        android:id="@+id/cb_list"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:background="@drawable/bg_checkbox"

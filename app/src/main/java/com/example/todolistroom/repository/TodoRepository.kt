@@ -42,4 +42,13 @@ class TodoRepository(application: Application) {
         }
         catch (e: Exception) { }
     }
+
+    fun deleteTodo(idxList: List<Int>) {
+        try {
+            val thread = Thread(Runnable {
+                todoDao.deleteTodo(idxList)
+            }).start()
+        }
+        catch (e: Exception) { }
+    }
 }

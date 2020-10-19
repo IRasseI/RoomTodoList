@@ -25,4 +25,8 @@ class TodoViewModel(application: Application): AndroidViewModel(application) {
     fun deleteAllTodo () {
         repository.deleteAllTodo()
     }
+
+    fun deleteTodo (idxList: List<Int>) {
+        repository.deleteTodo(idxList)
+    }
 }

@@ -20,4 +20,7 @@ interface TodoDAO {
 
     @Query("DELETE FROM todo_table")
     fun deleteAllTodo()
+
+    @Query("DELETE FROM todo_table WHERE idx in (:idxList)")
+    fun deleteTodo(idxList: List<Int>)
 }
