@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             todoViewModel.changeStateTodo(idx, state)
         }
 
-        val adapter = TodoAdapter(::changeState)
+        val adapter = TodoAdapter(this, ::changeState)
         rv_todo.adapter = adapter
         rv_todo.layoutManager = LinearLayoutManager(this)
         rv_todo.setHasFixedSize(true)

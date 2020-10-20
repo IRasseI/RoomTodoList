@@ -1,9 +1,12 @@
 package com.example.todolistroom.adapter
 
+import android.content.Context
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -16,9 +19,13 @@ data class CheckedList(
     val state: Boolean
 )
 
-class TodoAdapter(val changeState: (idx: Int, state: Boolean) -> Unit): RecyclerView.Adapter<TodoAdapter.Holder>() {
+class TodoAdapter(
+    private val context: Context,
+    val changeState: (idx: Int, state: Boolean) -> Unit
+): RecyclerView.Adapter<TodoAdapter.Holder>() {
     private var todo: List<Todo> = listOf()
     private var checkedList: ArrayList<CheckedList> = arrayListOf()
+    private var lastPosition: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder = Holder(parent)
 
@@ -28,6 +35,8 @@ class TodoAdapter(val changeState: (idx: Int, state: Boolean) -> Unit): Recycler
             if (position >= checkedList.size) {
                 checkedList.add(CheckedList(Todo.idx!!, false))
             }
+
+            setAnimation(holder.itemView, position)
 
             with(holder) {
                 tvTitle.text = Todo.title
@@ -72,6 +81,14 @@ class TodoAdapter(val changeState: (idx: Int, state: Boolean) -> Unit): Recycler
 
     fun getCheckedItem(): ArrayList<CheckedList> {
         return checkedList;
+    }
+
+    private fun setAnimation(v: View, pos: Int) {
+        if (pos > lastPosition) {
+            val animation = AnimationUtils.loadAnimation(context, R.anim.item_animation_fall_down)
+            v.startAnimation(animation)
+            lastPosition = pos
+        }
     }
 
     class Holder(v: ViewGroup): RecyclerView.ViewHolder(
